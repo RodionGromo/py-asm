@@ -1,0 +1,49 @@
+### Registers
+ra - register a
+rb - register b
+rc - register c
+rd - register d
+ro - output register, prints to console when "call out" is triggered
+ri - input register
+rr - return register, holds value for jret command
+
+### Data definers and managers
+# dci - data cursor index, controls where data will be written, default is 0
+# all allocations start at dci
+# if allocation fails, error will be thrown
+# all allocations have a name for reference where they are starting
+
++ string x data - sets len(data) bytes for string data, name x
++ int x data - sets 4 bytes for integer data, name x
++ mrd type x - tries to read type "type" from position x to register ra
+	- possible types: int (4 bytes)
++ lci x - moves dci left x times
++ rci x - moves dci right x times
++ rsci - resets dci to 0
++ sdci x - sets dci to x
++ rdci - reads byte on dci to ra
+
+### Commands
++ mov x, y - set value x to y
++ add x, y - adds x to y
++ sub x, y - subtracts x from y
++ mul x - multiples ra by x
++ div x - divides ra by x, mod moves to rb
+? call x - can trigger functions x:
+	+ out - prints value in ro (register o)
+	+ in - reads one character from keyboard and writes to ri (register i)
++ jump x - moves command execution index to x
++ jmpl label - moves cei to label position
++ jret - moves cei to last jump command executed
++ or x - or's ra with x
++ and x - and's ra with x
++ xor - xor's ra with x
++ not - not's ra
++ ror x - shifts ra to right x times
++ rol x - shifts ra to left x times
++ cmp x - compares ra with x
++ jgr x - jump if greater, jumps to label if x is not a number
++ jle x - jump if less
++ jeq x - jump if equal
++ btse x y z - set x bit in y to state z
+rnd x, y - generates random number from x to y and puts it in ra

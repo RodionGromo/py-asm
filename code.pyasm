@@ -1,0 +1,35 @@
+string test_str Hello world!
+
+jmpl preload
+
+print_esc:
+	btst 0 flag 0 -- disable character output mode
+	mov ra, ro
+	call out -- call to print out value in ro as number
+
+	btst 0 flag 1 -- set character output mode
+	mov 10 ro
+	call out -- call to print out value in ro as character
+
+	jret
+
+print_chr:
+	btst 0 flag 1
+	mov ra, ro
+	call out
+	jret
+
+preload:
+	sdci test_str
+main:
+	-- read a string 
+	rdci
+	cmp 0
+	jeq exit
+	rci
+	jmpl print_chr
+	jmpl main
+
+exit:
+	mov 10 ra
+	jmpl print_chr
